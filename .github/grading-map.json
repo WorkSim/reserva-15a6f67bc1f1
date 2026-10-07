@@ -1,0 +1,5 @@
+{
+  "BOOK-801": ["tests/Reserva.Grading/Cases/DoubleBookRaceGradingTest.cs"],
+  "BOOK-808": ["tests/Reserva.Grading/Cases/TimezoneGradingTest.cs"],
+  "BOOK-815": ["tests/Reserva.Grading/Cases/CapacityGradingTest.cs"]
+}

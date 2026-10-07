@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+
+    <!-- The SDK's default compile glob is `**/*.cs` from the PROJECT directory,
+         not from Cases/. That would pull ANY .cs a student drops anywhere under
+         tests/Reserva.Grading/ into the graded assembly — and C# prefers a
+         source-declared type over the same type from a referenced assembly
+         (CS0436 is only a warning), so a file declaring
+         `namespace Reserva.Services { class BookingService }` would shadow the
+         real src/ implementation and the canonical suite would compile against
+         the shadow and pass for real, with the planted defect untouched.
+         Emptying Cases/ cannot close that; the glob reaches outside Cases/.
+         So the default glob is turned OFF and the compile set is pinned to
+         Cases/ alone — the one directory the grader wipes and re-overlays.
+         This file is in the pack's protectedPaths, so it is restored from the
+         canonical clone before the suite runs and a student cannot undo it. -->
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Cases/**/*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="xunit" Version="2.5.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+    <Using Include="Reserva.Domain" />
+    <Using Include="Reserva.Store" />
+    <Using Include="Reserva.Services" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Reserva\Reserva.csproj" />
+  </ItemGroup>
+
+</Project>
